@@ -1,0 +1,33 @@
+{
+    "header": {
+      "home": "Acasă",
+      "services": "Servicii",
+      "about": "Despre Noi",
+      "contact": "Contact",
+      "auraHealth": "Aura Health"
+    },
+    "heroSection": {
+      "title": "Sănătatea Ta, Elevată. Viitorul Îngrijirii Digitale.",
+      "description": "Experimentați servicii medicale inteligente, fără probleme, de oriunde...",
+      "bookAppointment": "Programează o Consultație",
+      "learnMore": "Află Mai Multe"
+    },
+    "servicesSection": {
+      "title": "Serviciile Noastre Digitale",
+      "virtualConsultations": {
+        "title": "Consultații Virtuale",
+        "description": "Conectează-te cu medicii în siguranță prin apel video..."
+      },
+      "aiDiagnostics": {
+        "title": "Diagnosticare cu AI",
+        "description": "Utilizează instrumente AI avansate pentru analiza preliminară a simptomelor..."
+      },
+      "healthMonitoring": {
+        "title": "Monitorizare Personalizată a Sănătății",
+        "description": "Monitorizează datele tale de sănătate, primește informații personalizate..."
+      }
+    },
+    "footer": {
+      "copyright": "&copy; 2023 Aura Health. Toate drepturile rezervate."
+    }
+  }

@@ -1,0 +1,33 @@
+{
+    "header": {
+      "home": "Home",
+      "services": "Services",
+      "about": "About",
+      "contact": "Contact",
+      "auraHealth": "Aura Health"
+    },
+    "heroSection": {
+      "title": "Your Health, Elevated. The Future of Digital Care.",
+      "description": "Experience seamless, intelligent healthcare from anywhere.",
+      "bookAppointment": "Book an Appointment",
+      "learnMore": "Learn More"
+    },
+    "servicesSection": {
+      "title": "Our Digital Services",
+      "virtualConsultations": {
+        "title": "Virtual Consultations",
+        "description": "Connect with doctors securely via video call."
+      },
+      "aiDiagnostics": {
+        "title": "AI-Powered Diagnostics",
+        "description": "Utilize advanced AI tools for preliminary symptom analysis."
+      },
+      "healthMonitoring": {
+        "title": "Personalized Health Monitoring",
+        "description": "Track your health data, receive personalized insights."
+      }
+    },
+    "footer": {
+      "copyright": "&copy; 2023 Aura Health. All rights reserved."
+    }
+  }
