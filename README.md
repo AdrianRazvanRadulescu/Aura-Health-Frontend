@@ -1,50 +1,96 @@
-# React + TypeScript + Vite
+# ✨ Aura Health - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern telemedicine platform designed to provide an accessible and intelligent healthcare experience, blending cutting-edge technology with a human-centric approach.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Aura Health Screenshot](./docs/images/aura-health-screenshot.png)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🚀 Key Features
 
-- Configure the top-level `parserOptions` property like this:
+* **Virtual Consultations:** Secure video connections with medical specialists.
+* **AI-Powered Diagnostics:** A tool for preliminary symptom analysis.
+* **Personalized Health Monitoring:** Track health data and receive personalized insights.
+* **Medical Records Management:** Secure and centralized access to medical history.
+* **Secure Authentication:** Login and registration system powered by Laravel Sanctum.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🛠️ Tech Stack
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Frontend
+* **Framework:** [React](https://react.dev/) 18.3
+* **Language:** [TypeScript](https://www.typescriptlang.org/)
+* **Build Tool:** [Vite](https://vitejs.dev/)
+* **UI Library:** [Mantine UI](https://mantine.dev/)
+* **Server State Management:** [TanStack Query (React Query)](https://tanstack.com/query/latest)
+* **Forms:** [React Hook Form](https://react-hook-form.com/)
+* **Routing:** [React Router](https://reactrouter.com/)
+* **HTTP Client:** [Axios](https://axios-http.com/)
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Backend
+* **Framework:** [Laravel](https://laravel.com/) (connected via API)
+
+---
+
+## ⚙️ Getting Started
+
+Follow these steps to get a local copy of the project up and running.
+
+### Prerequisites
+* [Node.js](https://nodejs.org/en) (version 18 or newer)
+* [Git](https://git-scm.com/)
+* A running instance of the backend server (Laravel) that is accessible.
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/AdrianRazvanRadulescu/aura-health-frontend.git
+    ```
+
+2.  **Navigate into the project directory:**
+    ```bash
+    cd aura-health-frontend
+    ```
+
+3.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+4.  **Set up environment variables:**
+    Create a `.env` file in the project root by copying the `.env.example` file or creating it from scratch. Add the URL of your backend API:
+    ```
+    VITE_API_BASE_URL=http://localhost:8000/api
+    ```
+
+5.  **Start the development server:**
+    ```bash
+    npm run dev
+    ```
+
+The application should now be available in your browser at `http://localhost:5173`.
+
+---
+
+## 📜 Available Scripts
+
+* `npm run dev`: Runs the app in development mode with hot-reloading.
+* `npm run build`: Builds and optimizes the app for production in the `dist/` folder.
+* `npm run lint`: Runs ESLint to check for code and style errors.
+* `npm run preview`: Starts a local server to preview the production build.
+
+---
+
+## 📄 License
+
+This project is distributed under the MIT License. See `LICENSE` for more information.
+
+---
+## 👨‍💻 Contact
+
+Adrian-Razvan Radulescu - [adrianradulescu998@gmail.com](mailto:adrianradulescu998@gmail.com)
+
+Project Link: [https://github.com/AdrianRazvanRadulescu/aura-health-frontend](https://github.com/AdrianRazvanRadulescu/aura-health-frontend)
