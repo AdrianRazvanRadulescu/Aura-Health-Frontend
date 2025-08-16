@@ -8,6 +8,9 @@ import RegisterPage from "../pages/RegisterPage";
 import AppLayout from "../components/layout/AppLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import DashboardPage from "../pages/Dashboard";
+import MedicalRecordsPage from "../pages/MedicalRecordPage";
+import BookAppointmentPage from "../pages/BookAppointmentPage";
+import DoctorDashboard from "../pages/DoctorDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +24,9 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           { path: '/dashboard', element: <DashboardPage /> },
+          { path: '/medical-records', element: <MedicalRecordsPage /> },
+          { path: '/book-appointment', element: <BookAppointmentPage /> },
+          { path: '/doctor/dashboard', element: <DoctorDashboard /> },
         ]
       }
     ],

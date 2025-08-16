@@ -1,37 +1,25 @@
-import { Box, Container, Title, Anchor, Text } from '@mantine/core';
+import { Title, Anchor, Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import RegisterForm from '../features/authentication/components/RegisterForm';
+import AuthLayout from '../components/layout/AuthLayout';
 
 const RegisterPage = () => {
   return (
-    <Box style={{
-      minHeight: '100vh',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'var(--mantine-color-sage-green-0)',
-      padding: 'var(--mantine-spacing-xl)',
-    }}>
-      <Container style={{
-        backgroundColor: 'white',
-        borderRadius: 'var(--mantine-radius-md)',
-        boxShadow: 'var(--mantine-shadow-md)',
-        padding: 'var(--mantine-spacing-xl)',
-        width: '100%',
-        maxWidth: 480,
-      }}>
-        <Title order={2} ta="center" mb="lg">
-          Creează un Cont Nou
-        </Title>
-        <RegisterForm />
-        <Text ta="center" mt="xl">
-          Ai deja un cont?{' '}
-          <Anchor component={Link} to="/login" c="sage-green">
-            Autentifică-te
-          </Anchor>
-        </Text>
-      </Container>
-    </Box>
+    <AuthLayout>
+      <Title order={2} ta="left" mb="xs">
+        Create Your Account
+      </Title>
+      <Text c="dimmed" mb="xl">
+        Start your journey towards intelligent healthcare today.
+      </Text>
+      <RegisterForm />
+      <Text ta="center" mt="xl">
+        Already have an account?{' '}
+        <Anchor component={Link} to="/login" c="sage-green">
+          Sign In
+        </Anchor>
+      </Text>
+    </AuthLayout>
   );
 };
 
