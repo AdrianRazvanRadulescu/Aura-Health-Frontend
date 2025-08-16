@@ -1,29 +1,32 @@
-import { Box, Button, TextInput, PasswordInput, Stack, Alert, Anchor } from '@mantine/core';
+import { Box, Button, TextInput, PasswordInput, Stack, Alert, Anchor, Text } from '@mantine/core';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IconAlertCircle } from '@tabler/icons-react';
-
-import { useLogin } from '../hooks/useLogin';
+import { useAuth } from '../../../auth/AuthContext';
 import { LoginCredentials } from '../types';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const LoginForm = () => {
-  const { login, isLoading, error } = useLogin();
+  const { login, isLoading } = useAuth();
+  const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
   const { register, handleSubmit, formState: { errors } } = useForm<LoginCredentials>();
 
-  const onSubmit: SubmitHandler<LoginCredentials> = (data) => {
-    login(data); 
+  const onSubmit: SubmitHandler<LoginCredentials> = async (data) => {
+    try {
+      setError(null);
+      await login(data);
+      navigate('/dashboard');
+    } catch (err) {
+      setError('Emailul sau parola sunt incorecte.');
+      console.error(err);
+    }
   };
-  
+
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
       {error && (
-         <Alert 
-           variant="light" 
-           color="red" 
-           title="Eroare la autentificare" 
-           icon={<IconAlertCircle size={16} />} 
-           mb="md"
-         >
-            {error.response?.data?.message || 'Emailul sau parola sunt incorecte.'}
+         <Alert variant="light" color="red" title="Eroare la autentificare" mb="md">
+            {error}
          </Alert>
       )}
 
@@ -38,7 +41,7 @@ const LoginForm = () => {
         />
         <PasswordInput
           required
-          label="Password"
+          label="Parola"
           placeholder="Parola ta"
           autoComplete="current-password"
           {...register("password", { required: "Parola este obligatorie" })}
@@ -53,9 +56,12 @@ const LoginForm = () => {
           Login
         </Button>
 
-        <Anchor href="#" size="sm" c="dimmed" ta="center">
-          Ai uitat parola?
-        </Anchor>
+        <Text ta="center" mt="md">
+          Nu ai cont?{' '}
+            <Anchor component={Link} to="/register" c="sage-green">
+                Înregistrează-te
+            </Anchor>
+        </Text>
       </Stack>
     </Box>
   );

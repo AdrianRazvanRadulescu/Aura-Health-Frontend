@@ -58,7 +58,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
               boxShadow: theme.shadows.md,
               borderColor: theme.colors['sage-green'][4],
             },
-            '&:hover .hover-arrow': {
+            '&:hover .hoverArrow': {
               opacity: 1,
               transform: 'translateX(0)',
             },
@@ -80,7 +80,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           </Badge>
         )}
         <ArrowRight
-          className="hover-arrow"
+          className="hoverArrow"
           size={24}
           color="var(--mantine-color-sage-green-7)"
           style={{

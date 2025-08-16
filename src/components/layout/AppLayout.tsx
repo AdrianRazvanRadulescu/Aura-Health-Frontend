@@ -2,8 +2,11 @@ import { Box, Container, Group, Title, Anchor, Button } from '@mantine/core';
 import { motion } from 'framer-motion';
 import { Outlet, Link } from 'react-router-dom';
 import Footer from './Footer';
+import { useAuth } from '../../auth/AuthContext'; // Importă useAuth
 
 const AppLayout = () => {
+  const { user, logout, isLoading } = useAuth(); // Consumă starea de autentificare
+
   return (
     <Box>
       <Box component="header" style={{ position: 'sticky', top: 0, zIndex: 10, backdropFilter: 'blur(8px)', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
@@ -67,11 +70,19 @@ const AppLayout = () => {
                 >
                   Contact
                 </Anchor>
-
               </Group>
               <Group gap="xs">
-                <Button component={Link} to="/login" variant="subtle">Login</Button>
-                <Button component={Link} to="/register">Înregistrare</Button>
+                {user ? (
+                  <>
+                    <Button component={Link} to="/dashboard" variant="subtle">Dashboard</Button>
+                    <Button onClick={() => logout()} loading={isLoading}>Logout</Button>
+                  </>
+                ) : (
+                  <>
+                    <Button component={Link} to="/login" variant="subtle">Login</Button>
+                    <Button component={Link} to="/register">Înregistrare</Button>
+                  </>
+                )}
               </Group>
             </Group>
           </motion.div>

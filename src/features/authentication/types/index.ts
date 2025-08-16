@@ -4,6 +4,14 @@ export interface LoginCredentials {
   password?: string;
 }
 
+// NOU: Tipul pentru datele trimise la register
+export interface RegisterCredentials {
+    name: string;
+    email: string;
+    password?: string;
+    password_confirmation?: string;
+}
+
 // Tipul pentru utilizatorul primit de la API
 export interface User {
   id: number;
