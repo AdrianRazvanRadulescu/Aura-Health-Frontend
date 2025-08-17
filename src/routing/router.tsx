@@ -11,10 +11,12 @@ import DashboardPage from "../pages/Dashboard";
 import MedicalRecordsPage from "../pages/MedicalRecordPage";
 import BookAppointmentPage from "../pages/BookAppointmentPage";
 import DoctorDashboard from "../pages/DoctorDashboard";
-import DashboardLayout from "../components/layout/DashboardLayout"; // Asigură-te că ai importat DashboardLayout
+import DashboardLayout from "../components/layout/DashboardLayout";
+import TeleconsultatiiPage from "../pages/TeleconsulatiiPage";
+import AiAnalysisPage from "../pages/AiAnalysisPage";
+import PersonalizedMonitoringPage from "../pages/PersonalizedMonitoringPage";
 
 export const router = createBrowserRouter([
-  // GRUPUL 1: Rute Publice (cu AppLayout și Footer)
   {
     element: <AppLayout />,
     children: [
@@ -22,6 +24,9 @@ export const router = createBrowserRouter([
       { path: '/services', element: <Services /> },
       { path: '/about', element: <About /> },
       { path: '/contact', element: <Contact /> },
+      { path: '/services/teleconsultatii', element: <TeleconsultatiiPage /> },
+      { path: '/services/ai-analysis', element: <AiAnalysisPage /> },
+      { path: '/services/personalized-monitoring', element: <PersonalizedMonitoringPage /> },
     ],
   },
   {

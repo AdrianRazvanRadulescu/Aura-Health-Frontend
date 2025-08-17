@@ -1,5 +1,3 @@
-// src/pages/AiAnalysisPage.tsx
-
 import { Box, Container, Title, Text, SimpleGrid, ThemeIcon, Button, Paper, Group, FileButton } from '@mantine/core';
 import { motion } from 'framer-motion';
 import { Brain, UploadSimple, ShieldCheck, Clock, Lightbulb, FileText } from '@phosphor-icons/react';
