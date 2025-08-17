@@ -1,19 +1,18 @@
 import axios from 'axios';
 import { User, LoginCredentials, RegisterCredentials } from '../types';
 
-// Setări globale pentru Axios
-axios.defaults.withCredentials = true; // Permite trimiterea cookie-urilor
-axios.defaults.withXSRFToken = true; // NOU: Permite trimiterea automată a token-ului CSRF
+
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
 axios.defaults.baseURL = `${import.meta.env.VITE_API_BASE_URL}`;
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
   headers: {
     'Accept': 'application/json',
   },
 });
 
 const getCsrfCookie = async () => {
-    // Acum URL-ul este relativ la baseURL
     await apiClient.get('/sanctum/csrf-cookie');
 };
 

@@ -29,13 +29,7 @@ const BookAppointmentPage = () => {
     const fetchDoctors = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/doctors');
-        
-        // --- MODIFICARE CHEIE ---
-        // Adăugăm un log pentru a vedea exact ce primim de la API
-        console.log("API Response:", response.data); 
-
         // Verificăm dacă răspunsul este un obiect cu o cheie 'data' (comun în Laravel)
-        // sau dacă este direct un array.
         if (Array.isArray(response.data)) {
           setDoctors(response.data);
         } else if (response.data && Array.isArray(response.data.data)) {

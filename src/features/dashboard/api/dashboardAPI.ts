@@ -35,3 +35,16 @@ export const getRecentMedicalRecordsAPI = async (): Promise<MedicalRecord[]> => 
   const response = await apiClient.get('/api/medical-records/recent');
   return response.data.data;
 };
+
+export const analyzeDocument = async (file: File): Promise<{ analysis: string }> => {
+  const formData = new FormData();
+  formData.append('document', file);
+
+  const { data } = await apiClient.post('/api/analyze-document', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return data;
+};
