@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         queryKey: ['user'],
         queryFn: getUserAPI,
         retry: false,
+        refetchOnWindowFocus: false,
     });
 
     const loginMutation = useMutation({

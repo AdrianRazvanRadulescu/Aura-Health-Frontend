@@ -88,8 +88,11 @@ const MedicationReminderCard = () => (
 const DashboardPage = () => {
     const { user } = useAuth();
 
-    const { data: appointments, isLoading: isLoadingAppointments } = useQuery<Appointment[]>({ queryKey: ['appointments'], queryFn: getAppointmentsAPI });
-   
+    const { data: appointments, isLoading: isLoadingAppointments } = useQuery<Appointment[]>({ 
+        queryKey: ['appointments'], 
+        queryFn: getAppointmentsAPI,
+        enabled: !!user 
+    });
     const nextAppointment = appointments && appointments.length > 0 ? appointments[0] : null;
     const otherAppointments = appointments && appointments.length > 1 ? appointments.slice(1) : [];
 
