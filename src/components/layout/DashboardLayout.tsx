@@ -1,19 +1,16 @@
-// src/components/layout/AppLayout.tsx
 import { Box } from '@mantine/core';
 import { Outlet } from 'react-router-dom';
-import Footer from './Footer';
 import AppHeader from './AppHeader';
 
-const AppLayout = () => {
+const DashboardLayout = () => {
   return (
     <Box style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <AppHeader />
-      <main style={{ flexGrow: 1 }}>
+      <Box component="main" style={{ flexGrow: 1, backgroundColor: 'var(--mantine-color-gray-0)' }}>
         <Outlet />
-      </main>
-      <Footer />
+      </Box>
     </Box>
   );
 };
 
-export default AppLayout;
+export default DashboardLayout;

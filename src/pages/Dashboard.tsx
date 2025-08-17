@@ -1,105 +1,162 @@
-import { Container, Title, Text, SimpleGrid, Box, Stack, Anchor, Loader, Center } from '@mantine/core';
+// src/pages/Dashboard.tsx
+import { Container, Title, Text, Box, Stack, Grid, Paper, Button, Group, Avatar, Skeleton, Center } from '@mantine/core';
 import { useAuth } from '../auth/AuthContext';
-import { Calendar, Heartbeat, Files, Stethoscope } from '@phosphor-icons/react';
+import { PlusCircle, CalendarX} from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import DashboardMetricCard from '../components/dashboard/DashboardMetricCard';
-import AppointmentCard from '../components/dashboard/AppointmentCard';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getAppointmentsAPI } from '../features/dashboard/api/dashboardAPI';
-import { Appointment } from '../features/dashboard/types';
+import { getAppointmentsAPI, getRecentMedicalRecordsAPI } from '../features/dashboard/api/dashboardAPI';
+import { Appointment, MedicalRecord } from '../features/dashboard/types';
+import { format } from 'date-fns';
+import { ro } from 'date-fns/locale/ro';
+
+// Card Programare (similar cu cel vechi, dar adaptat)
+const UpcomingAppointmentCard = ({ appointment, delay }: { appointment: Appointment; delay: number }) => {
+    const appointmentDate = new Date(appointment.appointment_date);
+    return (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay }}>
+            <Paper withBorder p="md" radius="md" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <Avatar src={appointment.doctor.photo_url} size="lg" radius="xl" />
+                <div style={{ flex: 1 }}>
+                    <Text fw={700}>{appointment.doctor.name}</Text>
+                    <Text size="sm" c="dimmed">{appointment.doctor.specialty}</Text>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                    <Text size="sm" fw={500}>{format(appointmentDate, 'd MMMM yyyy', { locale: ro })}</Text>
+                    <Text size="sm" c="dimmed">{appointment.appointment_time.slice(0, 5)}</Text>
+                </div>
+            </Paper>
+        </motion.div>
+    );
+};
+
+// NOU: Card pentru documente recente
+const RecentDocumentCard = ({ record, delay }: { record: MedicalRecord; delay: number }) => (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay }}>
+        <Paper withBorder p="md" radius="md">
+            <Group justify="space-between">
+                <div>
+                    <Text fw={700}>{record.type}</Text>
+                    <Text size="sm" c="dimmed">de la {record.doctor.name}</Text>
+                </div>
+                <Button component={Link} to="/medical-records" variant="light" size="xs">
+                    Vezi
+                </Button>
+            </Group>
+        </Paper>
+    </motion.div>
+);
+
+// NOU: Grafic simulat
+const ActivityChart = () => {
+    const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    const mockData = [30, 50, 80, 40, 60, 20, 90]; // înălțimi procentuale
+
+    return (
+        <Paper withBorder p="lg" radius="md">
+            <Title order={4} mb="md">Activitate Săptămânală</Title>
+            <Group grow align="flex-end" gap="xs" h={120}>
+                {mockData.map((height, index) => (
+                    <Box key={index} style={{ textAlign: 'center' }}>
+                        <motion.div
+                            initial={{ height: 0 }}
+                            animate={{ height: `${height}%` }}
+                            transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
+                            style={{ backgroundColor: 'var(--mantine-color-sage-green-5)', borderRadius: '4px', margin: '0 auto', width: '70%' }}
+                        />
+                        <Text size="xs" mt="xs">{days[index]}</Text>
+                    </Box>
+                ))}
+            </Group>
+        </Paper>
+    );
+};
 
 const DashboardPage = () => {
     const { user } = useAuth();
-    const today = new Date().toLocaleDateString('ro-RO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const today = format(new Date(), "eeee, d MMMM yyyy", { locale: ro });
 
-    const { data: appointments, isLoading } = useQuery<Appointment[]>({
+    const { data: appointments, isLoading: isLoadingAppointments } = useQuery<Appointment[]>({
         queryKey: ['appointments'],
         queryFn: getAppointmentsAPI,
     });
+    
+    const { data: recentRecords, isLoading: isLoadingRecords } = useQuery<MedicalRecord[]>({
+        queryKey: ['recentMedicalRecords'],
+        queryFn: getRecentMedicalRecordsAPI,
+    });
 
     return (
-        <Box style={{ backgroundColor: 'var(--mantine-color-sage-green-0)', minHeight: 'calc(100vh - 80px)' }}>
-            <Container size="xl" py={60}>
-                <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                    <Text c="dimmed">{today}</Text>
+        <Box>
+            <Container size="xl" py={{ base: 30, md: 60 }}>
+                <Paper shadow="sm" p="xl" radius="md" mb="xl" style={{ backgroundImage: `linear-gradient(135deg, var(--mantine-color-sage-green-1) 0%, var(--mantine-color-sage-green-0) 100%)` }}>
+                    <Text c="dimmed" tt="capitalize">{today}</Text>
                     <Title order={1} size={48} fw={700}>
-                        Bine ai revenit, {user?.name}!
+                        Bine ai revenit{user?.name ? `, ${user.name.split(' ')[0]}` : ''}!
                     </Title>
-                    <Text size="lg" c="dimmed" mt="sm">
-                        Iată sumarul sănătății tale. Ai grijă de tine astăzi!
-                    </Text>
-                </motion.div>
+                    <Text mt="sm" c="sage-green.8">Sfatul zilei: Nu uita să te hidratezi corespunzător pe parcursul zilei!</Text>
+                </Paper>
 
-                <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} mt={40}>
-                    <Anchor component={Link} to="/book-appointment" style={{ textDecoration: 'none' }}>
-                        <DashboardMetricCard
-                            icon={<Stethoscope size={28} />}
-                            label="Consultație Nouă"
-                            value="Programează Acum"
-                            color="green"
-                            delay={0.1}
-                        />
-                    </Anchor>
-                    <DashboardMetricCard
-                        icon={<Calendar size={28} />}
-                        label="Programări Viitoare"
-                        value={isLoading ? '...' : (appointments?.length ?? 0).toString()}
-                        color="sage-green"
-                        delay={0.2}
-                    />
-                    <Anchor component={Link} to="/medical-records" style={{ textDecoration: 'none' }}>
-                        <DashboardMetricCard
-                            icon={<Files size={28} />}
-                            label="Dosar Medical"
-                            value="Vezi Documente"
-                            color="yellow"
-                            delay={0.3}
-                        />
-                    </Anchor>
-                    <DashboardMetricCard
-                        icon={<Heartbeat size={28} />}
-                        label="Ritm Cardiac Mediu"
-                        value="72 bpm"
-                        color="red"
-                        delay={0.4}
-                    />
-                </SimpleGrid>
-
-                <Box mt={60}>
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }}>
-                        <Title order={2} mb="xl">
-                            Programările Tale Viitoare
-                        </Title>
-                    </motion.div>
-                    
-                    {isLoading ? (
-                        <Center h={100}>
-                            <Loader color="sage-green" />
-                        </Center>
-                    ) : (
-                        <Stack gap="lg">
-                            {appointments && appointments.length > 0 ? (
-                                appointments.map((appt, index) => {
-                                    const date = new Date(appt.appointment_date);
-                                    return (
-                                        <AppointmentCard
-                                            key={appt.id}
-                                            doctorName={appt.doctor.name}
-                                            specialty={appt.doctor.specialty}
-                                            date={date.toLocaleDateString('ro-RO', { weekday: 'long', day: 'numeric', month: 'long' })}
-                                            time={date.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' })}
-                                            avatarUrl={appt.doctor.avatar_url}
-                                            delay={0.6 + index * 0.1}
-                                        />
-                                    );
-                                })
+                <Grid gutter="xl">
+                    <Grid.Col span={{ base: 12, lg: 8 }}>
+                        <Stack>
+                            <Title order={2}>Programări Viitoare</Title>
+                            {isLoadingAppointments ? (
+                                <Stack><Skeleton height={80} radius="md" /><Skeleton height={80} radius="md" /></Stack>
                             ) : (
-                                <Text c="dimmed">Nu ai nicio programare viitoare.</Text>
+                                <>
+                                    {appointments && appointments.length > 0 ? (
+                                        appointments.map((appt, index) => <UpcomingAppointmentCard key={appt.id} appointment={appt} delay={index * 0.1} />)
+                                    ) : (
+                                        <Paper withBorder p="xl" radius="md" style={{ textAlign: 'center' }}>
+                                            <Center><CalendarX size={48} color="var(--mantine-color-gray-5)" /></Center>
+                                            <Title order={4} mt="md">Nicio programare</Title>
+                                            <Text c="dimmed" mt="xs" mb="lg">Nu ai nicio programare viitoare.</Text>
+                                            <Button component={Link} to="/book-appointment">Programează una acum</Button>
+                                        </Paper>
+                                    )}
+                                </>
+                            )}
+                            
+                            <Title order={2} mt="xl">Documente Recente</Title>
+                             {isLoadingRecords ? (
+                                <Stack><Skeleton height={70} radius="md" /><Skeleton height={70} radius="md" /></Stack>
+                            ) : (
+                                <>
+                                    {recentRecords && recentRecords.length > 0 ? (
+                                        recentRecords.map((record, index) => <RecentDocumentCard key={record.id} record={record} delay={index * 0.1} />)
+                                    ) : (
+                                        <Text c="dimmed">Nu ai documente recente în dosar.</Text>
+                                    )}
+                                </>
                             )}
                         </Stack>
-                    )}
-                </Box>
+                    </Grid.Col>
+
+                    <Grid.Col span={{ base: 12, lg: 4 }}>
+                        <Stack>
+                             <Paper component={Link} to="/book-appointment" shadow="md" p="xl" radius="md" style={{ textDecoration: 'none', background: 'var(--mantine-color-sage-green-6)', color: 'white' }}>
+                                <Group>
+                                    <PlusCircle size={48} />
+                                    <div>
+                                        <Title order={3}>Consultație Nouă</Title>
+                                        <Text>Programează o întâlnire.</Text>
+                                    </div>
+                                </Group>
+                            </Paper>
+                            
+                            {/* Noul Grafic */}
+                            <ActivityChart />
+
+                            <Paper component={Link} to="/medical-records" withBorder p="lg" radius="md" style={{ textDecoration: 'none' }}>
+                                <Group justify="space-between">
+                                    <Text fw={500}>Dosarul tău medical</Text>
+                                    <Button variant="light">Vezi detalii</Button>
+                                </Group>
+                            </Paper>
+                        </Stack>
+                    </Grid.Col>
+                </Grid>
             </Container>
         </Box>
     );

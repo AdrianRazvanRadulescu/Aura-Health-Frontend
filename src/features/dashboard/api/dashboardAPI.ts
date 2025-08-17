@@ -30,3 +30,8 @@ export const getDoctorAppointmentsAPI = async (): Promise<Appointment[]> => {
   const response = await apiClient.get('/api/doctor/appointments');
   return response.data.data;
 };
+
+export const getRecentMedicalRecordsAPI = async (): Promise<MedicalRecord[]> => {
+  const response = await apiClient.get('/api/medical-records/recent');
+  return response.data.data;
+};

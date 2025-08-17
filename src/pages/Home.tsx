@@ -48,7 +48,6 @@ const testimonials: Testimonial[] = [
 const Home: React.FC = () => {
   return (
     <Box>
-      {/* Hero Section */}
       <Box style={{ background: 'linear-gradient(180deg, var(--mantine-color-white), var(--mantine-color-sage-green-0))' }}>
         <Container size="xl" py={{ base: 80, md: 120 }}>
           <Grid align="center" gutter={60}>

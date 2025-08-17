@@ -1,8 +1,10 @@
 export interface Doctor {
-  id: number;
-  name: string;
-  specialty: string;
-  avatar_url: string;
+    id: number;
+    name: string;
+    specialty: string;
+    description: string;
+    photo_url: string; // Am adăugat această linie
+    price: number;
 }
 
 export interface User {
@@ -14,6 +16,7 @@ export interface User {
 export interface Appointment {
   id: number;
   appointment_date: string;
+  appointment_time: string;
   doctor: Doctor;
   user: User;
 }
@@ -26,8 +29,10 @@ export interface MedicalRecord {
 }
 
 export interface Doctor {
-  id: number;
-  name: string;
-  specialty: string;
-  avatar_url: string;
+    id: number;
+    name: string;
+    specialty: string;
+    description: string;
+    photo_url: string; 
+    price: number;
 }

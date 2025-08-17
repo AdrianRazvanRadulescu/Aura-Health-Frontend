@@ -11,8 +11,10 @@ import DashboardPage from "../pages/Dashboard";
 import MedicalRecordsPage from "../pages/MedicalRecordPage";
 import BookAppointmentPage from "../pages/BookAppointmentPage";
 import DoctorDashboard from "../pages/DoctorDashboard";
+import DashboardLayout from "../components/layout/DashboardLayout"; // Asigură-te că ai importat DashboardLayout
 
 export const router = createBrowserRouter([
+  // GRUPUL 1: Rute Publice (cu AppLayout și Footer)
   {
     element: <AppLayout />,
     children: [
@@ -20,8 +22,13 @@ export const router = createBrowserRouter([
       { path: '/services', element: <Services /> },
       { path: '/about', element: <About /> },
       { path: '/contact', element: <Contact /> },
+    ],
+  },
+  {
+    element: <ProtectedRoute />,
+    children: [
       {
-        element: <ProtectedRoute />,
+        element: <DashboardLayout />,
         children: [
           { path: '/dashboard', element: <DashboardPage /> },
           { path: '/medical-records', element: <MedicalRecordsPage /> },
@@ -29,8 +36,9 @@ export const router = createBrowserRouter([
           { path: '/doctor/dashboard', element: <DoctorDashboard /> },
         ]
       }
-    ],
+    ]
   },
+
   { path: '/login', element: <LoginPage /> },
   { path: '/register', element: <RegisterPage /> },
 ]);
